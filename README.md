@@ -1,5 +1,5 @@
 <h1>INSTRUCTION :
-Setting up Go to the project foldername, run this in your terminal: npm install, composer install, set your .env according to your DB name, php artisan migrate, php artisan key:generate, php artisan serve, php artisan db:seed --class=StudentSeeder, if you want the admin role open your PhpMyAdmin go to db change the user role to 1 of one of the users table.</h1>
+Setting up Go to the project foldername, run this in your terminal: npm install, composer install, set your .env according to your DB name, php artisan migrate, php artisan key:generate, php artisan serve, php artisan db:seed --class=StudentSeeder, if you want the admin role open your PhpMyAdmin go to db change the user role to 1 of one of the users table, passwornd: defaultpassword.</h1>
 
 
 
