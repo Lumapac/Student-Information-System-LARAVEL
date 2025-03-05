@@ -1,4 +1,4 @@
-Setting up: Go to the project folder, run this in your terminal: npm install, composer install, php artisan key:generate, php artisan serve
+Setting up: Go to the project foldername, run this in your terminal: npm install, composer install, php artisan key:generate, php artisan serve
 
 
 
