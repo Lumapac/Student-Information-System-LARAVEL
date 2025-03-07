@@ -32,4 +32,16 @@ class StoreStudentRequest extends FormRequest
             'std_email' => ['required', 'email', 'max:255', 'unique:students,std_email'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'std_id.required' => 'The student ID is required.',
+            'std_id.unique' => 'The student ID has already been taken.',
+
+            'std_email.required' => 'The email address is required.',
+            'std_email.email' => 'Please provide a valid email address.',
+            'std_email.unique' => 'The email address has already been taken.',
+        ];
+    }
 }

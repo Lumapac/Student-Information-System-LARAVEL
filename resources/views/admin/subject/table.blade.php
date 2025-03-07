@@ -18,14 +18,18 @@
                                     <input type="text" class="form-control">
                                 </div>
 
-                                <a href="{{ route('subject.add') }}" class="btn btn-success me-3">Add Subject</a>
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#subjectModal">
+                                    Add Subject
+                                </button>
+
                             </div>
                         </div>
 
-                        @if(session('success'))
+                        @if(session('success') || session('confirmationMessage'))
                             <div id="success-alert" class="mx-2 p-2 alert alert-success alert-dismissible fade show mt-2"
                                 role="alert">
-                                {{ session('success') }}
+                                {{ session('success') ?? session('confirmationMessage') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <script>
@@ -39,6 +43,27 @@
                             </script>
                         @endif
 
+
+                        @if ($errors->any())
+                            <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Failed to update the subject. Please check the errors below:</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <script>
+                                setTimeout(() => {
+                                    let alertBox = document.getElementById('error-alert');
+                                    if (alertBox) {
+                                        let bsAlert = new bootstrap.Alert(alertBox);
+                                        bsAlert.close();
+                                    }
+                                }, 8000);
+                            </script>
+                        @endif
 
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -125,6 +150,7 @@
                 </div>
             </div>
         </div>
+        @include('admin.subject.create')
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

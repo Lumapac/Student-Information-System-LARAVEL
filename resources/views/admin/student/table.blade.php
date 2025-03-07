@@ -13,20 +13,22 @@
                             </div>
 
                             <div div class="mt-3 d-flex justify-content-between align-items-center px-3">
-                            <div class="input-group input-group-outline w-30">
-                                <label class="form-label">Search subject...</label>
-                                <input type="text" class="form-control" id="searchInput">
-                            </div>
+                                <div class="input-group input-group-outline w-30">
+                                    <label class="form-label">Search subject...</label>
+                                    <input type="text" class="form-control" id="searchInput">
+                                </div>
 
-                                <a href="{{ route('student.add') }}" class="btn btn-success me-3">Add Student</a>
+                                <!-- Add Student Button -->
+                                <button class="btn btn-info me-3" data-bs-toggle="modal" data-bs-target="#ModalAddStudent">
+                                    Add Student
+                                </button>
                             </div>
                         </div>
-
-                        @if(session('confirmationMessage'))
+                        @if(session('confirmationMessage') || session('success'))
                             <div id="success-alert"
-                                class="mx-2 p-2 alert alert-{{ session('alertType') }} alert-dismissible fade show mt-2"
+                                class="mx-2 p-2 alert alert-{{ session('alertType') ?? 'success' }} alert-dismissible fade show mt-2"
                                 role="alert">
-                                {{ session('confirmationMessage') }}
+                                {{ session('confirmationMessage') ?? session('success') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <script>
@@ -36,10 +38,31 @@
                                         let bsAlert = new bootstrap.Alert(alertBox);
                                         bsAlert.close();
                                     }
-                                }, 1250);
+                                }, 2000);
                             </script>
                         @endif
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+                                <strong>Failed to add student. Please check the errors below:</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+
+                            <script>
+                                setTimeout(() => {
+                                    let alertBox = document.getElementById('error-alert');
+                                    if (alertBox) {
+                                        let bsAlert = new bootstrap.Alert(alertBox);
+                                        bsAlert.close();
+                                    }
+                                }, 8000);
+                            </script>
+                        @endif
 
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -126,7 +149,6 @@
                                                             @csrf
                                                             {{ method_field('DELETE') }}
                                                         </form>
-
                                                     </div>
                                                 </td>
                                             </tr>
@@ -143,6 +165,7 @@
                 </div>
             </div>
         </div>
+        @include('admin.student.create')
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -205,4 +228,19 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var modal = document.getElementById("ModalAddStudent");
+
+            modal.addEventListener("show.bs.modal", function () {
+                document.body.style.overflow = "hidden";
+            });
+
+            modal.addEventListener("hidden.bs.modal", function () {
+                document.body.style.overflow = "auto";
+            });
+        });
+    </script>
+    
 @endsection

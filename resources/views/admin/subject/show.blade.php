@@ -5,6 +5,46 @@
         <!-- Navbar -->
         @include('layouts.navigation')
         <!-- End Navbar -->
+
+        @if (session('success'))
+            <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <script>
+                setTimeout(function () {
+                    let successAlert = document.getElementById('successAlert');
+                    if (successAlert) {
+                        let bsAlert = new bootstrap.Alert(successAlert);
+                        bsAlert.close();
+                    }
+                }, 2000);
+            </script>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+                <strong>Failed to update the subject. Please check the errors below:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <script>
+                setTimeout(() => {
+                    let alertBox = document.getElementById('error-alert');
+                    if (alertBox) {
+                        let bsAlert = new bootstrap.Alert(alertBox);
+                        bsAlert.close();
+                    }
+                }, 8000);
+            </script>
+        @endif
+
         <div class="container-fluid py-2">
             <h4>Code : {{ $subject->code }}</h4>
             <h4>Subject Code : {{ $subject->subject_code }}</h4>

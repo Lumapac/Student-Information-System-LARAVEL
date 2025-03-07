@@ -28,15 +28,14 @@ class GradeStudentController extends Controller
         $validatedData = $request->validated();
 
         foreach ($validatedData['grades'] as $enrollId => $grade) {
-            if (!is_null($grade)) {
+            $gradeValue = ($grade === "INC") ? "INC" : ($grade ?: null);
 
-                $gradeValue = ($grade === "INC") ? null : $grade;
-
-                EnrollStudent::where('id', $enrollId)->update(['grade' => $gradeValue]);
-            }
+            EnrollStudent::where('id', $enrollId)->update(['grade' => $gradeValue]);
         }
 
         return redirect()->route('student.view', $id)->with('success', 'Grades successfully uploaded.');
     }
+
+
 
 }

@@ -1,75 +1,117 @@
-@extends('admin.sidebar')
-@section('content')
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        @include('layouts.navigation')
-
-
-        <form action="{{ route('student.save') }}" method="POST">
-            @csrf
-            <!-- Student information -->
-            <div>
-                <x-input-label for="std_id" :value="__('Student ID')" />
-                <x-text-input id="std_id" class="block mt-1 w-full" type="text" name="std_id" :value="old('std_id')"
-                    required autofocus autocomplete="std_id" />
-                <x-input-error :messages="$errors->get('std_id')" class="mt-2" />
+<!-- Add Student Modal -->
+<div class="modal fade" id="ModalAddStudent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="ModalAddStudentLabel" aria-hidden="true"
+    onshow="document.body.style.overflow='hidden';"
+    onhide="document.body.style.overflow='auto';">
+    
+    <div class="modal-dialog modal-dialog-scrollable  modal-lg" style="max-width: 75%; margin-left: 20%;">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalAddStudentLabel">Add Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form action="{{ route('student.save') }}" method="POST">
+                    @csrf
+                    <!-- Student ID -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="student_id">Student ID:</label>
+                                <input type="text" id="std_id" name="std_id" class="form-control border border-dark rounded"
+                                    value="{{ old('std_id') }}"  style="padding: 10px;" required>
+                                @error('std_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="std_email">Email</label>
+                                <input type="email" id="std_email" name="std_email" class="form-control border border-dark rounded"
+                                    value="{{ old('std_email') }}" style="padding: 10px;" required>
+                                @error('std_email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- First Name -->
+                    <div class="form-group">
+                        <label for="std_firstname">First Name</label>
+                        <input type="text" id="std_firstname" name="std_firstname" class="form-control border border-dark rounded"
+                            value="{{ old('std_firstname') }}" style="padding: 10px;" required>
+                        @error('std_firstname')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <!-- Last Name -->
+                    <div class="form-group">
+                        <label for="std_lastname">Last Name</label>
+                        <input type="text" id="std_lastname" name="std_lastname" class="form-control border border-dark rounded"
+                            value="{{ old('std_lastname') }}" style="padding: 10px;" required>
+                        @error('std_lastname')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <!-- Middle Name -->
+                    <div class="form-group">
+                        <label for="std_middlename">Middle Name</label>
+                        <input type="text" id="std_middlename" name="std_middlename" class="form-control border border-dark rounded"
+                            value="{{ old('std_middlename') }}" style="padding: 10px;">
+                        @error('std_middlename')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="std_address">Address</label>
+                                <input type="text" id="std_address" name="std_address" class="form-control border border-dark rounded"
+                                    value="{{ old('std_address') }}" style="padding: 10px;" required>
+                                @error('std_address')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
-            <div>
-                <x-input-label for="std_firstname" :value="__('First Name')" />
-                <x-text-input id="std_firstname" class="block mt-1 w-full" type="text" name="std_firstname"
-                    :value="old('std_firstname')" required autofocus autocomplete="std_firstname" />
-                <x-input-error :messages="$errors->get('std_firstname')" class="mt-2" />
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="std_age">Age</label>
+                                <input type="number" id="std_age" name="std_age" class="form-control border border-dark rounded"
+                                    value="{{ old('std_age') }}" style="padding: 10px;" required>
+                                @error('std_age')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course -->
+                    <div class="form-group">
+                        <label for="std_course">Course</label>
+                        <input type="text" id="std_course" name="std_course" class="form-control border border-dark rounded"
+                            value="{{ old('std_course') }}" style="padding: 10px;" required>
+                        @error('std_course')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="modal-footer mt-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            Register
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <div>
-                <x-input-label for="std_lastname" :value="__('Last Name')" />
-                <x-text-input id="std_lastname" class="block mt-1 w-full" type="text" name="std_lastname"
-                    :value="old('std_lastname')" required autofocus autocomplete="std_lastname" />
-                <x-input-error :messages="$errors->get('std_lastname')" class="mt-2" />
-            </div>
-
-            <div>
-                <x-input-label for="std_middlename" :value="__('Middle Name')" />
-                <x-text-input id="std_middlename" class="block mt-1 w-full" type="text" name="std_middlename"
-                    :value="old('std_middlename')" autofocus autocomplete="std_middlename" />
-                <x-input-error :messages="$errors->get('std_middlename')" class="mt-2" />
-            </div>
-
-            <div>
-                <x-input-label for="std_age" :value="__('Age')" />
-                <x-text-input id="std_age" class="block mt-1 w-full" type="text" name="std_age" :value="old('std_age')"
-                    required autofocus autocomplete="std_age" />
-                <x-input-error :messages="$errors->get('std_age')" class="mt-2" />
-            </div>
-
-            <div>
-                <x-input-label for="std_course" :value="__('Course')" />
-                <x-text-input id="std_course" class="block mt-1 w-full" type="text" name="std_course"
-                    :value="old('std_course')" required autofocus autocomplete="std_course" />
-                <x-input-error :messages="$errors->get('std_course')" class="mt-2" />
-            </div>
-
-            <div>
-                <x-input-label for="std_address" :value="__('Address')" />
-                <x-text-input id="std_address" class="block mt-1 w-full" type="text" name="std_address"
-                    :value="old('std_address')" required autofocus autocomplete="std_address" />
-                <x-input-error :messages="$errors->get('std_address')" class="mt-2" />
-            </div>
-
-            <div class="mt-4">
-                <x-input-label for="std_email" :value="__('Email')" />
-                <x-text-input id="std_email" class="block mt-1 w-full" type="email" name="std_email"
-                    :value="old('std_email')" required autocomplete="std_email" />
-                <x-input-error :messages="$errors->get('std_email')" class="mt-2" />
-            </div>
-
-
-            <div class="flex items-center justify-end mt-4">
-
-                <x-primary-button class="ms-4" type="submit">
-                    {{ __('Register') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </main>
-@endsection
+        </div>
+    </div>
+</div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\EnrollStudent;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Services\StudentService;
@@ -64,7 +65,7 @@ class StudentController extends Controller
         if ($authUserRole == 0) {
             return redirect()->route('student.list')->with('success', 'Student added successfully.');
         }
-        
+
         abort(403, 'Unauthorized access');
     }
 
@@ -76,7 +77,7 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->firstOrFail();
 
         // Fetch enrolled subjects with subject details
-        $enrolledSubjects = \App\Models\EnrollStudent::where('student_id', $student->id)
+        $enrolledSubjects = EnrollStudent::where('student_id', $student->id)
             ->with('subject') // Ensure the relationship is loaded
             ->get();
 
@@ -115,8 +116,10 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $student = Student::where('id', $id)->first();
-        $student->delete();
+        $enrollStudent = EnrollStudent::where('student_id', $student->id)->first();
 
+
+        // Check if student exists
         if (!$student) {
             return redirect()->route('student.list')->with([
                 'confirmationMessage' => 'Student not found!',
@@ -124,6 +127,14 @@ class StudentController extends Controller
             ]);
         }
 
+        if ($enrollStudent->status === 'enrolled') {
+            return redirect()->route('student.list')->with([
+                'confirmationMessage' => 'Cannot delete an enrolled student!',
+                'alertType' => 'warning'
+            ]);
+        }
+
+        // Delete student
         $student->delete();
 
         return redirect()->route('student.list')->with([
@@ -131,5 +142,6 @@ class StudentController extends Controller
             'alertType' => 'success'
         ]);
     }
+
 
 }

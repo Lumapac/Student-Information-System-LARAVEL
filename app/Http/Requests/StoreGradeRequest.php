@@ -22,7 +22,7 @@ class StoreGradeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'grades' => 'required|array',
+            'grades' => 'nullable|array',
             'grades.*' => ['nullable', 'regex:/^(INC|[1-5](\.00|\.25|\.50|\.75)?)$/'],
         ];
     }

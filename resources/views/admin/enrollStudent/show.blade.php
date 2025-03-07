@@ -1,23 +1,5 @@
 <div class="card p-2">
     <table class="table table-bordered mt-4">
-        {{-- Success Message --}}
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
-                {{ session('success') }}
-            </div>
-
-            <script>
-                setTimeout(function () {
-                    let successMessage = document.getElementById('successMessage');
-                    if (successMessage) {
-                        successMessage.classList.remove('show');
-                        successMessage.classList.add('fade');
-                        setTimeout(() => successMessage.remove(), 300);
-                    }
-                }, 2000);
-            </script>
-        @endif
-
         <thead class="table-dark">
             <tr>
                 <th>Code</th>

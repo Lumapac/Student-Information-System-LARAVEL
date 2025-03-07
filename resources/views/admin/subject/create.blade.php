@@ -1,40 +1,52 @@
-@extends('admin.sidebar')
-@section('title', 'Add Subject')
-@section('content')
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        @include('layouts.navigation')
-
-
-        <form action="{{ route('subject.save') }}" method="POST">
-            @csrf
-            <!-- Subject information -->
-            <div>
-                <x-input-label for="code" :value="__('Code')" />
-                <x-text-input id="code" class="block mt-1 w-full" type="text" name="code" :value="old('code')" required
-                    autofocus autocomplete="code" />
-                <x-input-error :messages="$errors->get('code')" class="mt-2" />
+<div class="modal fade" id="subjectModal" tabindex="-1" aria-labelledby="subjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subjectModalLabel">Add New Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <!-- Form Start -->
+                <form action="{{ route('subject.save') }}" method="POST">
+                    @csrf
+                    <!-- Subject Code -->
+                    <div class="mb-3">
+                        <label for="code" class="form-label">Code</label>
+                        <input type="text" class="form-control border border-dark rounded" id="code" name="code" value="{{ old('code') }}"
+                            required>
+                        @error('code')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-            <div>
-                <x-input-label for="subject_code" :value="__('Subect Code')" />
-                <x-text-input id="subject_code" class="block mt-1 w-full" type="text" name="subject_code"
-                    :value="old('subject_code')" required autofocus autocomplete="subject_code" />
-                <x-input-error :messages="$errors->get('subject_code')" class="mt-2" />
+                    <!-- Subject Code -->
+                    <div class="mb-3">
+                        <label for="subject_code" class="form-label">Subject Code</label>
+                        <input type="text" class="form-control border border-dark rounded" id="subject_code" name="subject_code"
+                            value="{{ old('subject_code') }}" required>
+                        @error('subject_code')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Subject Description -->
+                    <div class="mb-3">
+                        <label for="subject_desc" class="form-label">Description</label>
+                        <input type="text" class="form-control border border-dark rounded" id="subject_desc" name="subject_desc"
+                            value="{{ old('subject_desc') }}" required>
+                        @error('subject_desc')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+                <!-- Form End -->
             </div>
-
-            <div>
-                <x-input-label for="subject_desc" :value="__('Description')" />
-                <x-text-input id="subject_desc" class="block mt-1 w-full" type="text" name="subject_desc"
-                    :value="old('subject_desc')" required autofocus autocomplete="subject_desc" />
-                <x-input-error :messages="$errors->get('subject_desc')" class="mt-2" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-
-                <x-primary-button class="ms-4" type="submit">
-                    {{ __('Save') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </main>
-@endsection
+        </div>
+    </div>
+</div>

@@ -53,10 +53,10 @@
 
                                 <div class="mb-3">
                                     <!-- <div class="form-outline mb-2 w-30">
-                                            <input type="text" id="subject-search"
-                                                class="form-control border border-secondary rounded"
-                                                placeholder="Search subjects..." />
-                                        </div> -->
+                                                <input type="text" id="subject-search"
+                                                    class="form-control border border-secondary rounded"
+                                                    placeholder="Search subjects..." />
+                                            </div> -->
                                     <label for="subjects" class="form-label">Select Subjects</label>
                                     <select name="subjects[]" class="form-select" multiple required>
                                         @foreach($subjects as $subject)
@@ -68,7 +68,7 @@
                                     </select>
                                     <small class="text-muted">Hold CTRL to select multiple subjects.</small>
                                 </div>
-                                <button type="submit" class="btn btn-success">Enroll Student</button>
+                                <button type="submit" class="btn btn-info">Enroll Student</button>
                             </form>
                         </div>
                     </div>

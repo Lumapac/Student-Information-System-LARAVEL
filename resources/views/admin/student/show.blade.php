@@ -6,6 +6,60 @@
         @include('layouts.navigation')
         <!-- End Navbar -->
         <div class="container-fluid py-2">
+            {{-- Success Message --}}
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorMessage">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <script>
+                setTimeout(function () {
+                    let successMessage = document.getElementById('successMessage');
+                    let errorMessage = document.getElementById('errorMessage');
+
+                    if (successMessage) {
+                        successMessage.classList.remove('show');
+                        successMessage.classList.add('fade');
+                        setTimeout(() => successMessage.remove(), 300);
+                    }
+
+                    if (errorMessage) {
+                        errorMessage.classList.remove('show');
+                        errorMessage.classList.add('fade');
+                        setTimeout(() => errorMessage.remove(), 300);
+                    }
+                }, 5000);
+            </script>
+
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+                    <strong>Failed to update the student. Please check the errors below:</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <script>
+                    setTimeout(() => {
+                        let alertBox = document.getElementById('error-alert');
+                        if (alertBox) {
+                            let bsAlert = new bootstrap.Alert(alertBox);
+                            bsAlert.close();
+                        }
+                    }, 8000);
+                </script>
+            @endif
 
             <h4>Status:
                 @php
@@ -36,9 +90,7 @@
                 Edit
             </a>
         </div>
-
         @include('admin.student.edit')
         @include('admin.enrollStudent.show')
     </main>
 @endsection
-

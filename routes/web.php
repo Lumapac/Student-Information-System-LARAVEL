@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\StudentGradeInfoController;
 use App\Http\Controllers\Student\StudentSubjectController;
 use App\Http\Controllers\Admin\EnrollStudentController;
@@ -15,27 +16,32 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth', 'rolemanager:admin'])->group(function () {
-    Route::resource('/student-list', StudentController::class)->names([
-        'index' => 'student.list',
-        'create' => 'student.add',
-        'store' => 'student.save',
-        'show' => 'student.view',
-        'edit' => 'student.edit',
-        'update' => 'student.update',
-        'destroy' => 'student.delete',
-    ]);
+    Route::resource('student-list', StudentController::class)->parameters([
+        'student-list' => 'student:std_id'
+    ])->names([
+                'index' => 'student.list',
+                'create' => 'student.add',
+                'store' => 'student.save',
+                'show' => 'student.view',
+                'edit' => 'student.edit',
+                'update' => 'student.update',
+                'destroy' => 'student.delete',
+            ]);
 });
 
+
 Route::middleware(['auth', 'rolemanager:admin'])->group(function () {
-    Route::resource('/subject-list', SubjectController::class)->names([
-        'index' => 'subject.list',
-        'create' => 'subject.add',
-        'store' => 'subject.save',
-        'show' => 'subject.view',
-        'edit' => 'subject.edit',
-        'update' => 'subject.update',
-        'destroy' => 'subject.delete',
-    ]);
+    Route::resource('subject-list', SubjectController::class)
+        ->parameters(['subject-list' => 'subject'])
+        ->names([
+            'index' => 'subject.list',
+            'create' => 'subject.add',
+            'store' => 'subject.save',
+            'show' => 'subject.view',
+            'edit' => 'subject.edit',
+            'update' => 'subject.update',
+            'destroy' => 'subject.delete',
+        ]);
 });
 
 Route::middleware(['auth', 'rolemanager:admin'])->group(function () {
@@ -63,9 +69,9 @@ Route::middleware(['auth', 'verified', 'rolemanager:student'])->group(function (
 
 
 
-Route::get('admin/dashboard', function () {
-    return view('admin-dashboard');
-})->middleware(['auth', 'verified', 'rolemanager:admin'])->name('admin');
+Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])
+    ->middleware(['auth', 'verified', 'rolemanager:admin'])
+    ->name('admin');
 
 
 Route::middleware('auth')->group(function () {

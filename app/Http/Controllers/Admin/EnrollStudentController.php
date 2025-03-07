@@ -104,7 +104,7 @@ class EnrollStudentController extends Controller
      */
     public function update(Request $request, $student_id)
     {
-        $student = Student::findOrFail($student_id);
+        Student::findOrFail($student_id);
 
         // Validate subjects
         $validatedData = $request->validate([
@@ -137,6 +137,13 @@ class EnrollStudentController extends Controller
 
         if (!$enrollment) {
             return redirect()->back()->with('error', 'Enrollment record not found.');
+        }
+
+        // Prevent deletion if the subject has a grade
+        if (!is_null($enrollment->grade)) {
+            return redirect()->back()->with([
+                'error' => 'Cannot delete an enrolled subject with a grade.'
+            ]);
         }
 
         $enrollment->delete();

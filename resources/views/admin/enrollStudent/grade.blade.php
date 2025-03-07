@@ -38,7 +38,8 @@
                                         <div class="input-group input-group-outline">
                                             <select name="grades[{{ $enroll->id }}]"
                                                 class="form-control @error('grades.' . $enroll->id) is-invalid @enderror">
-                                                <option value="" disabled selected>Select Grade</option>
+                                                <option value="" {{ is_null($enroll->grade) ? 'selected' : '' }}>No Grade
+                                                    (Null)</option>
                                                 @foreach(["1.00", "1.25", "1.50", "1.75", "2.00", "2.25", "2.50", "2.75", "3.00", "4.00", "5.00", "INC"] as $grade)
                                                     <option value="{{ $grade }}" {{ old('grades.' . $enroll->id, $enroll->grade) == $grade ? 'selected' : '' }}>
                                                         {{ $grade }}
@@ -46,7 +47,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
                                         {{-- Error message for individual grade field --}}
                                         @error('grades.' . $enroll->id)
                                             <span class="text-danger">{{ $message }}</span>

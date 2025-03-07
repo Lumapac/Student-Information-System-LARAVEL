@@ -20,7 +20,7 @@ class SubjectController extends Controller
         $authUserRole = Auth::user()->role;
         if ($authUserRole == 0) {
             return view('admin.subject.table', compact('subjectList'));
-        } 
+        }
     }
 
     /**
@@ -38,7 +38,7 @@ class SubjectController extends Controller
     {
 
 
-        
+
         $data = $request->validated();
         $subject = Subject::create($data);
 
@@ -61,23 +61,24 @@ class SubjectController extends Controller
      */
     public function edit(string $id)
     {
-        $subject = Subject::where('id', $id)->firstOrFail();
+        $subject = Subject::findOrFail($id);
         return view('admin.subject.edit', compact('subject'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubjectRequest $request, Subject $subject)
+    public function update(UpdateSubjectRequest $request, string $id)
     {
+        $subject = Subject::where('id', $id)->firstOrFail();
         $data = $request->validated();
 
-        // Perform the update
         $subject->update($data);
 
         return redirect()->route('subject.view', [$subject->id])
             ->with('success', 'Subject updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

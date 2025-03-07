@@ -14,10 +14,14 @@ class SubjectFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    protected $model = Subject::class;
+
+    public function definition()
     {
         return [
-            //
+            'code' => $this->faker->bothify('T##'), // Random code like T98
+            'subject_code' => $this->faker->bothify('IT ###C'), // Random subject code like IT 138C
+            'subject_desc' => $this->faker->sentence, // Random description like Information Assurance Security
         ];
     }
 }

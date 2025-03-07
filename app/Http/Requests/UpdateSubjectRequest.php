@@ -22,27 +22,27 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        $code = $this->route('subject')->code;
-        $subject_code = $this->route('subject')->subject_code;
-        $subject_desc = $this->route('subject')->subject_desc;
+        $subjectId = $this->route('subject');
+
         return [
             'code' => [
                 'required',
                 'string',
-                Rule::unique('subjects', 'code')->ignore($code, 'code')
+                Rule::unique('subjects', 'code')->ignore($subjectId),
             ],
 
             'subject_code' => [
                 'required',
                 'string',
-                Rule::unique('subjects', 'subject_code')->ignore($subject_code, 'subject_code')
+                Rule::unique('subjects', 'subject_code')->ignore($subjectId),
             ],
 
             'subject_desc' => [
                 'required',
                 'string',
-                Rule::unique('subjects', 'subject_desc')->ignore($subject_desc, 'subject_desc')
+                Rule::unique('subjects', 'subject_desc')->ignore($subjectId),
             ]
         ];
+
     }
 }

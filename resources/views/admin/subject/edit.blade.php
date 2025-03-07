@@ -15,7 +15,7 @@
 
                     <div class="form-group">
                         <label for="code">Code :</label>
-                        <input type="text" class="form-control" name="code" id="code"
+                        <input type="text" class="form-control border border-dark rounded" name="code" id="code"
                             value="{{ old('code', $subject->code) }}">
                         @error('code')
                             <span class="text-danger">{{ $message = "Code has already been asigned." }}</span>
@@ -24,8 +24,8 @@
 
                     <div class="form-group">
                         <label for="subject_code">Subject Code:</label>
-                        <input type="text" class="form-control" name="subject_code" id="subject_code"
-                            value="{{ old('subject_code', $subject->subject_code) }}">
+                        <input type="text" class="form-control border border-dark rounded" name="subject_code"
+                            id="subject_code" value="{{ old('subject_code', $subject->subject_code) }}">
                         @error('subject_code')
                             <span class="text-danger">{{ $message = "Subject code has already been asigned." }}</span>
                         @enderror
@@ -33,15 +33,15 @@
 
                     <div class="form-group">
                         <label for="subject_desc">Subject Description:</label>
-                        <input type="text" class="form-control" name="subject_desc" id="subject_desc"
-                            value="{{ old('subject_desc', $subject->subject_desc) }}">
+                        <input type="text" class="form-control border border-dark rounded" name="subject_desc"
+                            id="subject_desc" value="{{ old('subject_desc', $subject->subject_desc) }}">
                         @error('subject_desc')
                             <span class="text-danger">{{ $message = "Subject description must be unique." }}</span>
                         @enderror
                     </div>
-                    <div>
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                     </div>
                 </div>
 
